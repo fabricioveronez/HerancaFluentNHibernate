@@ -12,13 +12,13 @@ namespace TabelaSeparada.Console
     {
         static void Main(string[] args)
         {
-            ISessionFactory sessionFactory = Fluently.Configure()
-                           .Database(MsSqlConfiguration.MsSql2012.ConnectionString("Data Source=localhost;Initial Catalog=HerancaNHibernate;User ID=sa;Password=NHibernate@123")
-                           .ShowSql().FormatSql())
-                           .Mappings(m =>
-                               m.FluentMappings
-                               .AddFromAssemblyOf<PessoaMap>())
-                           .BuildSessionFactory();
+             ISessionFactory sessionFactory = Fluently.Configure()
+                            .Database(MsSqlConfiguration.MsSql2012.ConnectionString("Data Source=localhost;Initial Catalog=HerancaNHibernate;User ID=sa;Password=NHibernate@123")
+                            .ShowSql().FormatSql())
+                            .Mappings(m =>
+                                m.FluentMappings
+                                .AddFromAssemblyOf<PessoaMap>())
+                            .BuildSessionFactory();
 
             ISession session = sessionFactory.OpenSession();
 
@@ -32,7 +32,7 @@ namespace TabelaSeparada.Console
                 Numero = "3434",
                 Pais = "Brasil",
                 Telefone = "99999-9999",
-                 UF= "RJ"              
+                UF = "RJ"
             };
 
             session.SaveOrUpdate(pf);
@@ -54,13 +54,13 @@ namespace TabelaSeparada.Console
             session.Flush();
 
             var pessoas = session.Query<Pessoa>().Count();
-            System.Console.WriteLine($"Pessoas: {pessoas}");
+            System.Console.WriteLine($"Quantidade de entidades do tipo Pessoa: {pessoas}");
 
             var pessoasFisicas = session.Query<PessoaFisica>().Count();
-            System.Console.WriteLine($"Pessoas: {pessoasFisicas}");
+            System.Console.WriteLine($"Quantidade de entidades do tipo PessoaFisica: {pessoasFisicas}");
 
             var pessoasJuridicas = session.Query<PessoaJuridica>().Count();
-            System.Console.WriteLine($"Pessoas: {pessoasJuridicas}");
+            System.Console.WriteLine($"Quantidade de entidades do tipo PessoaJuridica: {pessoasJuridicas}");
         }
     }
 }

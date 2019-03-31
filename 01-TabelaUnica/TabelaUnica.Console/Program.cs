@@ -4,6 +4,7 @@ using NHibernate;
 using System;
 using TabelaUnica.Entidades;
 using TabelaUnica.Entidades.Mapeamento;
+using System.Linq;
 
 namespace TabelaUnica.Console
 {
@@ -12,12 +13,12 @@ namespace TabelaUnica.Console
         static void Main(string[] args)
         {
             ISessionFactory sessionFactory = Fluently.Configure()
-                           .Database(MsSqlConfiguration.MsSql2012.ConnectionString("Data Source=localhost;Initial Catalog=HerancaNHibernate;User ID=sa;Password=NHibernate@123")
-                           .ShowSql().FormatSql())
-                           .Mappings(m =>
-                               m.FluentMappings
-                               .AddFromAssemblyOf<PessoaMap>())
-                           .BuildSessionFactory();
+                            .Database(MsSqlConfiguration.MsSql2012.ConnectionString("Data Source=localhost;Initial Catalog=HerancaNHibernate;User ID=sa;Password=NHibernate@123")
+                            .ShowSql().FormatSql())
+                            .Mappings(m =>
+                                m.FluentMappings
+                                .AddFromAssemblyOf<PessoaMap>())
+                            .BuildSessionFactory();
 
             ISession session = sessionFactory.OpenSession();
 
@@ -53,14 +54,13 @@ namespace TabelaUnica.Console
             session.Flush();
 
             var pessoas = session.Query<Pessoa>().Count();
-            System.Console.WriteLine($"Pessoas: {pessoas}");
+            System.Console.WriteLine($"Quantidade de entidades do tipo Pessoa: {pessoas}");
 
             var pessoasFisicas = session.Query<PessoaFisica>().Count();
-            System.Console.WriteLine($"Pessoas: {pessoasFisicas}");
+            System.Console.WriteLine($"Quantidade de entidades do tipo PessoaFisica: {pessoasFisicas}");
 
             var pessoasJuridicas = session.Query<PessoaJuridica>().Count();
-            System.Console.WriteLine($"Pessoas: {pessoasJuridicas}");
-
+            System.Console.WriteLine($"Quantidade de entidades do tipo PessoaJuridica: {pessoasJuridicas}");
         }
     }
 }
